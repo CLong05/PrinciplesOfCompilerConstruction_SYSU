@@ -1,0 +1,600 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10001 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./01 引论_files/bootstrap.css" rel="stylesheet">
+ <link href="./01 引论_files/justified-nav.css" rel="stylesheet">
+<script src="./01 引论_files/jquery.min.js.下载"></script>
+<script src="./01 引论_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>(  )是两类程序语言处理程序。<br>A．高级语言程序和低级语言程序<br>B．解释程序和编译程序<br>C．编译程序和操作系统<br>D．系统程序和应用程序</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>(  )是一种典型的解释型语言。<br>A． BASIC<br>B． C<br>C． FORTRAN<br>D． PASCAL</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>把汇编语言程序翻译成机器可执行的目标程序的工作是由(  )完成的。<br>A．编译器<br>B．汇编器<br>C．解释器<br>D．预处理器</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>编写一个计算机高级语言的源程序后 ,到正式上机运行之前，一般要经过(  )这几步:<br>(1)编辑  (2)编译  (3)连接  (4)运行<br> A .   (1)(2)(3)(4)<br>B． (1)(2)(3)<br>C． (1)(3)<br>D． (1)(4)</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>编译程序将高级语言程序翻译成(  )。<br>A. 机器语言程序或高级语言程序<br>B. 汇编语言或机器语言程序<br>C. 汇编语言程序或高级语言程序<br>D. 中间语言程序或高级语言程序</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>编译程序绝大多数时间花在(  )上。<br>A．出错处理<br>B．词法分析<br>C．目标代码生成<br>D．表格管理</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>编译程序是对(  )。<br>A．汇编程序的翻译<br>B．高级语言程序的解释执行<br>C．机器语言的执行<br>D．高级语言的翻译</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>编译程序是一种(  )。<br>A. 汇编程序<br>B．翻译程序<br>C．解释程序<br>D．目标程序</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>从编译程序的角度说，源程序中的错误通常分为(  )两大类。<br>A. 词法错误和语法错误；<br>B. 语法错误和语义错误；<br>C. 编辑错误和诊断错误；<br>D. 词法错误和语义错误；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td>构造编译程序应掌握(  )。<br>A．源程序<br>B．目标语言<br>C．编译方法<br>D．以上三项都是</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>将编译程序分成若干个“遍”是为了(  )。<br>A. 提高程序的执行效率<br>B. 使程序的结构更加清晰<br>C. 利用有限的机器内存并提高机器的执行效率<br>D．利用有限的机器内存但降低了机器的执行效率</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>解释程序处理语言时 ,大多数采用的是(  )方法。<br>A．源程序命令被逐个直接解释执行<br>B．先将源程序转化为中间代码 ,再解释执行<br>C．先将源程序解释转化为目标程序 ,再执行<br>D．以上方法都可以</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>目标代码生成阶段所生成的目标代码的形式不可能是(  )。<br>A. 绝对指令代码<br>B. 可充定位的指令代码。<br>C. 汇编指令代码<br>D. 三地址代码</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>如果一个编译程序能产生不同于其宿主机的机器代码，则称它为：(  )。<br>A. 诊断编译程序<br>B. 优化编译程序<br>C. 交叉编译程序<br>D. 可变目标编译程序</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>通常一个编译程序中，不仅包含词法分析，语法分析，中间代码生成，代码优化，目标代码生成等五个部分，还应包括(  )。<br>A．模拟执行器<br>B．解释器<br>C．表格处理和出错处理<br>D．符号执行器</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>下面的四个选项中，(  )不是编译程序的组成部分。<br>A. 词法分析程序<br>B. 代码生成程序<br>C. 设备管理程序<br>D. 语法分析程序</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>下面对编译原理的有关概念正确描述的是：(  )。<br>A. 目标语言只能是机器语言<br>B. 编译程序处理的对象是源语言。<br>C. Lex是语法分析自动生成器<br>D. 解释程序属于编译程序</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>下面关于解释程序的描述正确的是(  )。<br>(1)解释程序的特点是处理程序时不产生目标代码<br>(2)解释程序适用于 COBOL和 FORTRAN语言<br>(3)解释程序是为打开编译程序技术的僵局而开发的<br>A． (1)(2)<br>B． (1)<br>C． (1)(2)(3)<br>D． (2)(3)</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>现代多数实用编译程序所产生的目标代码都是一种可重定位的指令代码，在运行前必须借助于一个(  )把各个目标模块，包括系统提供的库模块连接在一起，确定程序变量或常数在主存中的位置，装入内存中制定的起始地址，使之成为一个可运行的绝对指令代码的程序。<br>A. 重定位程序；<br>B. 解释程序；<br>C. 连接装配程序；<br>D. 诊断程序；</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>一个编译程序中，不仅包含词法分析，(  )，中间代码生成，代码优化，目标代码生成等五个部分。<br>A．语法分析<br>B．文法分析<br>C．语言分析<br>D．解释分析</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>用高级语言编写的程序经编译后产生的程序叫(  )。<br>A．源程序<br>B．目标程序<br>C．连接程序<br>D．解释程序</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>"与编译系统相比，解释系统(  )。<br>A．比较简单 ,可移植性好 ,执行速度快<br>B．比较复杂 ,可移植性好 ,执行速度快<br>C．比较简单 ,可移植性差 ,执行速度慢<br>D．比较简单 ,可移植性好 ,执行速度慢"</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>语义错误是指源程序中不符合语义规则的错误，不包括：(  ) <br>A. 非法字符错误<br>B. 类型不一致错误。<br>C. 作用域错误<br>D. 说明错误</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>在目标代码生成阶段，符号表用(  )。<br>A．目标代码生成<br>B．语义检查<br>C．语法检查<br>D．地址分配</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>A compiler is a program tha can read a program in one language – the【1】language - and translate it into an equivalent program in another language - the 【2】language;</td>
+        <td><center>%source%target</center></td>
+		<td><center> %source%target</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>A Java source program may first be compiled into an 【1】form called bytecodes.  The bytecodes are then【2】 by a virtual machine.</td>
+        <td><center>%intermediate%interpreted</center></td>
+		<td><center> %intermediate%Interpreted</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>【1】编译程序：不需重写编译程序中与机器无关的部分就能改变目标机的编译程序。</td>
+        <td><center>%可变目标</center></td>
+		<td><center> %可变目标</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>【1】编译程序：能产生不同于其宿主机的机器代码的编译程序。</td>
+        <td><center>%交叉</center></td>
+		<td><center> %交叉</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>【1】编译程序：着重于提高目标代码效率的编译程序。</td>
+        <td><center>%优化</center></td>
+		<td><center> %优化</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>【1】编译程序：专门用于帮助程序开发和调试的编译程序。</td>
+        <td><center>%诊断</center></td>
+		<td><center> %诊断</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>【1】程序：把某一种高级语言源程序转换成汇编语言程序或机器语言程序的程序。</td>
+        <td><center>%编译</center></td>
+		<td><center> %编译</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>【1】程序：对高级语言源程序并不生成汇编程序或机器语言程序，而是边解释边执行的程序。</td>
+        <td><center>%解释</center></td>
+		<td><center> %解释</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>33</center></td>
+        <td>编译程序的“【1】”：就是对源程序或者中间结果从头到尾的一次扫描，并做有关的加工处理，生成新的中间结果或者目标程序。</td>
+        <td><center>%遍</center></td>
+		<td><center> %遍</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>34</center></td>
+        <td>"编译程序的工作过程一般可以划分为词法分析,语法分析,语义分析,中间代码生成,代码优化等几个基本阶段,同时还会伴有【1】和【2】。"</td>
+        <td><center>%表格处理%出错处理</center></td>
+		<td><center> %表格处理%出错处理</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>35</center></td>
+        <td>编译程序中包括词法分析、语法分析、语义分析和中间代码产生等主要与源语言程序有关但与目标机无关的那些部分叫【1】；编译程序中包括目标代码生成、目标代码优化等与目标机有关而与源语言无关的那些部分部分叫【2】。</td>
+        <td><center>%编译前端%编译后端</center></td>
+		<td><center> %编译前端%编译后端</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>36</center></td>
+        <td>编译方式与解释方式的根本区别在于【1】。</td>
+        <td><center>%是否生成目标代码</center></td>
+		<td><center> %是否生成目标代码</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>37</center></td>
+        <td>标识符是由字母或数字以及某些特殊符号（因不同的高级语言而不同）组成的，但是必须以【1】开头的一个字符串。当给某标识符以确切的含义时，这个标识符就叫做名字。</td>
+        <td><center>%字母</center></td>
+		<td><center> %字母</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>38</center></td>
+        <td>程序语言中的各种【1】都是用标识符表示的。</td>
+        <td><center>%名字</center></td>
+		<td><center> %名字</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>39</center></td>
+        <td>"对编译程序而言,输入数据是【1】，输出结果是【2】。"</td>
+        <td><center>%源程序%目标程序</center></td>
+		<td><center> %源程序%目标代码</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>40</center></td>
+        <td>计算机执行用高级语言编写的程序主要有两种途径：【1】和【2】。</td>
+        <td><center>%解释%编译</center></td>
+		<td><center> %编译%解释</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>41</center></td>
+        <td>"若源程序是用高级语言编写的，【1】是机器语言程序或汇编程序,则其翻译程序称为【2】。"</td>
+        <td><center>%目标程序%编译程序</center></td>
+		<td><center> %目标程序%编译程序</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>42</center></td>
+        <td>"在使用高级语言编程时,首先可通过编译程序发现源程序的全部【1】错误和语义的分错误。"</td>
+        <td><center>%语法</center></td>
+		<td><center> %语法</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>43</center></td>
+        <td>编译后端通常不依赖于源语言而仅仅依赖于【1】。</td>
+        <td><center>%中间语言</center></td>
+		<td><center> %中间语言</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>44</center></td>
+        <td>我们有时把编译程序划分为编译前端和编译后端。前端主要由与【1】有关但与【2】无关的那些部分组成。</td>
+        <td><center>%源程序%目标机</center></td>
+		<td><center> %源程序%目标机</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>45</center></td>
+        <td>为了使编译后的Java程序从一个平台移到另外一个平台上执行，Java定义了一种称为BytCode的虚拟机代码。只要实际使用的操作平台上实现了执行ByteCode的Java解释器，这个操作平台就可以执行各种Java程序。这就是所谓Java语言的【1】。</td>
+        <td><center>%操作平台无关性</center></td>
+		<td><center> %操作平台无关性</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>46</center></td>
+        <td>如果不需改写编译程序中与机器无关的部分就可以把编译程序移植到另外一个目标机上，则称该编译程序是【1】。</td>
+        <td><center>%可变目标编译程序</center></td>
+		<td><center> %可变目标编译程序</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>47</center></td>
+        <td>"“ 用高级语言书写的源程序都必须通过编译,产生目标代码后才能投入运行”这种说法。"</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>48</center></td>
+        <td>编译程序生成的目标程序都是可执行的程序。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>49</center></td>
+        <td>编译程序是对高级语言程序的解释执行。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>50</center></td>
+        <td>"编译程序与具体的机器有关,与具体的语言无关。"</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>51</center></td>
+        <td>编译前端主要由与源语言和目标机相关的那些部分组成。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>52</center></td>
+        <td>程序语言的语言处理程序是一种应用软件。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>53</center></td>
+        <td>分析作为单独的一遍来处理较好。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>54</center></td>
+        <td>汇编器将高级语言程序翻译成汇编语言程序。  </td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>55</center></td>
+        <td>计算机高级语言翻译成低级语言只有解释一种方式。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>56</center></td>
+        <td>甲机上的某编译程序在乙机上能直接使用的必要条件是甲机和乙机的操作系统功能完全相同。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>57</center></td>
+        <td>解释程序适用于COBOL和FORTRAN语言。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>58</center></td>
+        <td>取编译程序前端改写其后端以生成不同机器上的目标代码，目前技术上还难以实现。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>59</center></td>
+        <td>许多编译程序在识别出语法单位后并不真正构造语法树。 </td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>60</center></td>
+        <td>优化的任务在于对前端编译所产生的中间代码进行加工和变换，以其能产生运行结果更为准确的目标代码。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>61</center></td>
+        <td>在编译过程中，既可以将几个不同的阶段合为一遍，也可以把一个阶段的工作分为若干遍。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>62</center></td>
+        <td>在编译中进行语法检查的目的是为了发现程序中所有错误。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>63</center></td>
+        <td>在程序中标识符的出现仅为使用性的。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>64</center></td>
+        <td>支持程序设计人员进行程序计开发的工具，除了编译程序以外，还需要编辑程序、链接程序和调试程序等其他一些工具。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>

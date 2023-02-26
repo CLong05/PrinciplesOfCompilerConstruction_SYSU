@@ -1,0 +1,438 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10007 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./07 语法分析3-LR文法_files/bootstrap.css" rel="stylesheet">
+ <link href="./07 语法分析3-LR文法_files/justified-nav.css" rel="stylesheet">
+<script src="./07 语法分析3-LR文法_files/jquery.min.js.下载"></script>
+<script src="./07 语法分析3-LR文法_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>在 LR分析法中，分析栈中存放的状态是识别规范句型(C)的 DFA状态。<br>A .( )句柄<br>B .( )前缀<br>C .( )活前缀<br>D .( ) LR(0)项目</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>若项目集 Ik含有 A -&gt;α•，则在状态 k时，仅当面临的输入符号 a∈FOLLOW(A)时，才采取“A -&gt;α• ”动作的一定是(D)。<br>A.  LALR文法<br>B． LR(0)文法<br>C． LR(1)文法<br>D． SLR(1)文法</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>LR语法分析栈中存放的状态是识别(  )的DFA状态。<br>A. 前缀；<br>B. 可归前缀；<br>C. 项目；<br>D. 句柄；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>有文法G＝（｛S｝，｛a｝，｛S→SaS，S→ε｝，S），该文法是(  )。<br>A.  LL(1)文法；<br>B. 二义性文法；<br>C. 算符优先文法；<br>D.  SLR(1)文法；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>在编译程序中，语法分析分为自顶向下分析和自底向上分析两类，(  )和LL(1)分析法属于自顶向下分析；<br>A. 深度分析法<br>B. 宽度优先分析法<br>C. 算符优先分析法<br>D. 递归下降子程序分析法</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>一个LR(k)文法，无论k取多大，()。<br>A.  都是无二义性的；<br>B.  都是二义性的；<br>C.  一部分是二义性的；<br>D.  无法判定二义性；</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>LR分析是寻找右句型的()。<br>A.  短语；<br>B.  素短语；<br>C.  最左素短语；<br>D.  句柄</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>LR分析法中分析能力最强的是()。<br>A.  SLR(1)；<br>B.  LR(0)；<br>C.  LR(1)；<br>D.  LALR(1)</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>LR分析法中分析能力最弱的是()。<br>A.  SLR(1)；<br>B.  LR(0)；<br>C.  LR(1)；<br>D.  LALR(1)</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td>在LR分析法中，分析栈中存放的状态是识别规范句型()的DFA状态。<br>A. 句柄<br>B.  前缀<br>C.  活前缀<br>D.  LR(0)项目</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>LR(0)每个项目中圆点的左部表示在分析过程中，要用该产生式归约时，句柄已识别的部分(进入符号栈)，右部表示【1】。</td>
+        <td><center>%等待识别的部分</center></td>
+		<td><center> %等待识别的部分</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>LR(k)分析法中，L的含义是从【1】扫描输入串，R的含义是构造一个【2】的逆过程，k的含义是【3】k个符号。</td>
+        <td><center>%左到右%最右推导%查看</center></td>
+		<td><center> %左到右%最右推导%查看</center></td>
+	<td><center>3</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>LR(k)分析方法中项目类型可分为四类【1】、【2】、【3】和【4】。</td>
+        <td><center>%归约项目%接受项目%移进项目%待约项目</center></td>
+		<td><center> %归约项目%接受项目%移进项目%待约项目</center></td>
+	<td><center>4</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>LR语法分析栈中存放的状态是识别【1】的DFA状态。</td>
+        <td><center>%文法活前缀和可归前缀</center></td>
+		<td><center> %文法活前缀和可归前缀</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>根据项目的定义，可给出文法中所有产生式的项目，而每个项目都为识别【1】的NFA的一个状态</td>
+        <td><center>活前缀</center></td>
+        <td style="color:red"><center> %活前缀</center></td>
+	<td><center>0</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>一个LR分析器包括两部分：一个总控程序和【1】。</td>
+        <td><center>%一张分析表</center></td>
+		<td><center> %一张分析表</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>在LR(0)分析中，相容的项目集，必须满足的条件是【1】，【2】。</td>
+        <td><center>%移进项目和归约项目并存%多个归约项目并存</center></td>
+		<td><center> %移进项目和归约项目并存%多个归约项目并存</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>在LR分析过程中的任何时候，栈里的文法符号从下往上应该构成【1】，把输入串的剩余部分配上之后应成为【2】。</td>
+        <td><center>%活前缀%规范句型</center></td>
+		<td><center> %活前缀%规范句型</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>任何LL(1)文法都是无二义性的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>LL(1)文法不能用LR（1）分析器来分析。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>LL(k)文法都不是二义性的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>LR 法是自顶向下语法分析方法。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>LR(1)分析中括号中的1是指，在选用产生式A→α进行分析，看当前读入符号是否在FIRST(α)中。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>LR分析法在自左至右扫描输入串时就能发现错误，但不能准确地指出出错地点。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>LR分析技术无法适用二义文法。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>LR分析器的任务就是产生 LR分析表。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>LR分析器在自左至右扫描输入串时就能发现其中的任何错误，并能准确地指出出错地点。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>根据项目的定义，可给出文法中所有产生式的项目，而每个项目都为识别活前缀的DFA的一个状态。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>构造LR分析器的任务就是产生LR分析表。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>每个文法都能改写为 LL(1)文法。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>每一个SLR(1)文法也都是LR(1)文法。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>任何一个LL(1)文法都是一个LR(1)文法，反之亦然。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>33</center></td>
+        <td>同心集的合并有可能产生新的“移进”/“归约”冲突。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>34</center></td>
+        <td>一个 LL(l)文法一定是无二义的。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>35</center></td>
+        <td>一个二义性文法可以是SLR文法或LALR文法。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>36</center></td>
+        <td>一个文法的预测分析表含有多重定义入口，说明该文法是LL(1)的。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>37</center></td>
+        <td>在SLR（1）分析法的名称中，S的含义是简单的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>

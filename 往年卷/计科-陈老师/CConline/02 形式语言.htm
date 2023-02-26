@@ -1,0 +1,534 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10002 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./02 形式语言_files/bootstrap.css" rel="stylesheet">
+ <link href="./02 形式语言_files/justified-nav.css" rel="stylesheet">
+<script src="./02 形式语言_files/jquery.min.js.下载"></script>
+<script src="./02 形式语言_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>Chomsky把文法分成四种类型，0型、1型、2型和3型。3型文法也称为(  )。<br>A. 上下文无关文法<br>B. 上下文相关文法<br>C. 正则文法<br>D. 短语文法</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>许多广为使用的语言，如Fortran、C、Pascal等，属于(  )。<br>A. 强制式语言<br>B. 应用式语言<br>C. 基于规则的语言<br>D. 面向对象的语言</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>设G是一个文法，S是开始符号。若S⇒*α，α∈(VT∪VN)*，则称α是一个(  )。<br>A. 句子<br>B. 句型<br>C. 推导<br>D. 语言</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>一个数据类型通常包括的三种要素中，没有下面的(  )。<br>a. 用于区别这种类型的数据对象的属性<br>b. 这种类型的数据对象可以具有的值<br>c. 对这种类型的数据对象的内存分配<br>d. 可以作用于这种类型的数据对象的操作</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>Chomsky把文法分成四种类型，其中，(  )也称正规文法<br>a. 0型<br>b. 1型<br>c. 2型<br>d. 3型</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>语言的词法规则一般用Chomsky的(  )型文法来描述：<br>a. 0<br>b. 1<br>c. 2<br>d. 3</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>7. 文法<br>S→(L)|a<br>L→L，S|S<br>中，下面是该文法中的终结符号。<br>a. S<br>b. ，<br>c. L<br>d. |</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>文法G所描述的语言是(  )的集合。<br>a. 文法G的字母表中的所有符号组成的符号串<br>b. 文法G的字母表的闭包*中的所有符号串<br>c. 文法G的识别符号推出的所有符号串<br>d. 文法G的识别符号推出的所有终结符号串</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>语言L={αcα| α∈(a|b)*}，该语言是(  )语言。<br>a. 3型语言<br>b. 2型语言<br>c. 1型语言<br>d. 0型语言</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td> 设有文法G：<br>I→I1 | I0 | Ia | Ic | a | b | c |<br>下面符号串中不是该文法的句子是：<br>a. ab0<br>b. a0c01<br>c. aaa，<br>d. bc10</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>给定文法A→bA|cc，下面的符号串中，是该文法句子的是(  )。<br>a. bcbc，<br>b. bbbcc，<br>c. bcbcc，<br>d. bccbcc；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>Chomsky定义的四种形式语言文法中，2型文法可由(  )识别。<br>a. 图灵机；<br>b. 确定性有限自动机；<br>c. 下推自动机；<br>d. 非确定性有限自动机；</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>若文法G定义的语言是无限集，则文法必然是(  )。<br>a. 上下文无关的<br>b. 递归的<br>c. 二义性的<br>d. 无二义性的</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>文法S→aaS|abc 定义的语言是(  )。<br>a. {a<sup>2k</sup>bc|k&gt;0}<br>b. {a<sup>k</sup>bc|k&gt;0}<br>c. {a<sup>2k-1</sup>bc|k&gt;0}<br>d. {a<sup>k</sup> a<sup>k</sup>bc|k&gt;0}</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>文法：G：S→xSx | y所识别的语言是(  )。<br>a. xyx<br>b. (xyx)*<br>c. x*yx*<br>d. x<sup>n</sup>yx<sup>n</sup>（n≥0）</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>假设G是一个文法，α是由终结符和非终结符组成的串，S是文法的开始符号，如果S=&gt;*α，则称α是【1】。</td>
+        <td><center>%句型</center></td>
+		<td><center> %句型</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>在赋值语句中，赋值号‘:=’左右两边的变量名扮演着两种不同的角色，为了区分一个名字的这两种特征，我们把一个名字所代表的【1】称为该名的左值，把一个名字的【2】称为该名字的右值。</td>
+        <td><center>%单元的地址%值</center></td>
+		<td><center> %单元的地址%值</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>对于文法G，仅含终结符号的句型称为【1】。</td>
+        <td><center>%句子</center></td>
+		<td><center> %句子</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>设有文法G[E]，其部分产生式: <br> E→E+T <br> E→T <br> T→T*F <br> T→F <br> F→(E) <br> F→a <br> 则VN={【1】},VT={【2】}。</td>
+        <td><center>%E,T,F%+,*,(,),a</center></td>
+		<td><center> %E,T,F%+,*,(,),a</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>由文法产生的【1】集合是文法产生的语言。</td>
+        <td><center>%句子</center></td>
+		<td><center> %句子</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>Chomsky语法定义的3型文法又可以分为【1】和【2】。</td>
+        <td><center>%右线性文法%左线性文法</center></td>
+		<td><center> %右线性文法%左线性文法</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>一个上下文文法G的四个组成部分分别是：开始符号【1】，【2】，非终结符集合。</td>
+        <td><center>%产生式集合%终结符集合</center></td>
+		<td><center> %产生式集合%终结符集合</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>已知语言：{a<sup>n</sup>b<sup>n</sup>a<sup>m</sup>b<sup>m</sup>|n，m≥0}，其语法定义为：<br>G=({a，b}，{S，A，B}，S，P)，其中P为：<br>【1】<br>【2】<br>【3】。</td>
+        <td><center>%S→AB%A→aAb|ε%B→aBb|ε</center></td>
+		<td><center> %S→AB%%B→aBb|ε</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>已知某语言的语法定义为：<br>G=({1，0}，{S，A}，S，P)，<br>且P：S→1A0|A|ε；A→0A1| ε，则该语言为{【1】}。</td>
+        <td><center>%(0|1)^n|n≥0</center></td>
+		<td><center> %(0|1)^n|n≥0</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>已知某语言为<br>{wcw<sup>R</sup>|w∈{a，b}*}，其语法定义为G=({a，b，c}，{S}，S，P)，其中P为：{【1】}。</td>
+        <td><center>%S→aSa|bSb|c</center></td>
+		<td><center> %S→aSa|bSb|c</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>所谓最右推导是指任何一步α→β都是对α中的【1】进行替换。</td>
+        <td><center>%最右非终结符</center></td>
+		<td><center> %最右非终结符</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>文法G[S]：S→aA|a，A→aS为【1】型文法，其确定的语言的为：【2】。</td>
+        <td><center> %3%{a^2n+1|n≥0}</center></td>
+		<td><center> %3%{a^2n+1|n≥0}</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>我们说G=(VT，VN，S，P)是一个0型文法，如果它的每一个产生式α→β是这样一种结构：α∈【1】且至少含有一个非终结符，而β∈【2】。</td>
+        <td><center> %(VN∪VT)*%(VN∪VT)*</center></td>
+		<td><center> %(VN∪VT)*%(VN∪VT)*</center></td>
+	<td><center>4</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>如果一个文法存在某个句子对应两棵以上不同的语法树，则称这个文法是是【1】。</td>
+        <td><center>%二义性文法</center></td>
+		<td><center> %二义性文法</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>设A→α是一个产生式，且α、β∈(VT∪VN)*，若αAβ=&gt;αγβ，则称αAβ直接推出αγβ；或者说，αγβ是αAβ的一个【1】。<br>如果α1=&gt;α2=&gt;…=&gt;αn，则称这个序列是从α1到αn的一个【2】。</td>
+        <td><center>%直接推导%推导</center></td>
+		<td><center> %直接推导%推导</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>一棵语法树表示了一个句型所有的不同推导过程，包括最右推导和最左推导。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>可能有两个不同的文法G1和G2，期中一个是二义的而另一个是无二义的，但是却有L(G1)＝L(G2)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>33</center></td>
+        <td>变量既持有左值又持有右值，而常数和带有算符的表达式一般认为只持有右值。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>34</center></td>
+        <td>文法G: S→bA ，A→aA|a  定义的语言是所有以b开头的后跟至少一个a的字符串的集合。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>35</center></td>
+        <td>设有文法G：S→S*S | S+S | (S) | a  该文法是二义的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>36</center></td>
+        <td>正则文法一定不是二义的。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>37</center></td>
+        <td>"上下文无关文法可以产生语言：L={ a<sup>n</sup>b<sup>n</sup>c<sup>i</sup>| i&gt;=1, n&gt;=1 }。"</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>38</center></td>
+        <td>不存在任何正规文法能产生语言：L={a<sup>n</sup>b<sup>n</sup> | n&gt;=1}。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>39</center></td>
+        <td>对于每一个左线性文法G1，都存在一个右线性文法G2，使得L(G1)=L(G2)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>40</center></td>
+        <td>正规文法产生的语言都可以用上下文无关文法来描述。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>41</center></td>
+        <td>上下文无关文法比正规文法有更强的描述能力。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>42</center></td>
+        <td>文法的二义性和语言的二义性在概念上是相同的，也就是说，对于某个语言，不可能存在两个以上的文法来描述它。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>43</center></td>
+        <td>二义性是可以判定的，也就是说，可以编这么一个程序，输入该文法后，该程序能确切地给出该文法是否二义的答案。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>44</center></td>
+        <td>说明语句旨在定义名字的性质。编译程序把这些性质登记在符号表中，并检查程序中名字的引用和说明是否一致。实际上，许多说明语句并不能翻译成相应的目标代码。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>45</center></td>
+        <td>C语言是一个允许子程序嵌套定义的语言。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>46</center></td>
+        <td>构造文法以生成下列语言: <br> {a<sup>3n</sup>|n≥1};<br>文法填入代码框，结果框填：EX2.1</td>
+        <td><center>EX2.1</center></td>
+		<td><center>EX2.1</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>47</center></td>
+        <td>构造文法以生成下列语言:<br> { a<sup>n</sup> b<sup>2m-1</sup>|n,m≥1};<br>文法填入代码框，结果框填：EX2.2</td>
+        <td><center>EX2.2</center></td>
+		<td><center>EX2.2</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>48</center></td>
+        <td>构造文法以生成下列语言:<br> {a<sup>n</sup>b<sup>n</sup>|n≥1};<br>文法填入代码框，结果框填：EX2.3</td>
+        <td><center>EX2.3</center></td>
+		<td><center>EX2.3</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>49</center></td>
+        <td>构造文法以生成下列语言:<br> { a<sup>n</sup> b<sup>m</sup>c<sup>k</sup>|n,m.k≥0}<br>文法填入代码框，结果框填：EX2.4</td>
+        <td><center>EX2.4</center></td>
+		<td><center>EX2.4</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>50</center></td>
+        <td>构造文法以生成下列语言:<br>偶整数集合，但偶整数不允许0打头; <br>文法填入代码框，结果框填：EX2.5</td>
+        <td><center>EX2.5</center></td>
+		<td><center>EX2.5</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>51</center></td>
+        <td>构造文法以生成下列语言:<br>不允许0打头能被5整除的整数集合: <br>文法填入代码框，结果框填：EX2.6</td>
+        <td><center>EX2.6</center></td>
+		<td><center>EX2.6</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>52</center></td>
+        <td>构造文法以生成下列语言:<br>L(G)={α|α∈(a,b)* ，且a含相同个数的a和b};<br>文法填入代码框，结果框填：EX2.7</td>
+        <td><center>EX2.7</center></td>
+		<td><center>EX2.7</center></td>
+	<td><center>5</center></td>
+	</tr>
+	<tr><td><center>53</center></td>
+        <td>设文法G=({N，D}，{0，l，2，3，4，5，6，7}，P，N)<br>其中，p={N→ND|D，D→0 | 1 | 2 | 3 | 4 | 5 | 6 | 7}。<br>试写出下列符号串的最左推导和最右推导: <br>&lt;1&gt; 3274 <br>&lt;2&gt;655173<br>推导填入代码框，结果框填：EX2.8</td>
+        <td><center>EX2.8</center></td>
+		<td><center>EX2.8</center></td>
+	<td><center>20</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>

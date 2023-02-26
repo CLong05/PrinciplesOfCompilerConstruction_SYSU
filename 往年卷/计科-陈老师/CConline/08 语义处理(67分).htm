@@ -1,0 +1,552 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10008 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./08 语义处理(67分)_files/bootstrap.css" rel="stylesheet">
+ <link href="./08 语义处理(67分)_files/justified-nav.css" rel="stylesheet">
+<script src="./08 语义处理(67分)_files/jquery.min.js.下载"></script>
+<script src="./08 语义处理(67分)_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>三地址语句if x relop y then L表示成四元式为( )。<br>a. (relop，x，y，L)<br>b. (relop，L，x，y)<br>c. (relop，x，L，y)<br>d. (L，x，y，relop)</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>下面( )不是类型表达式：<br>a. boolean<br>b. type-error<br>c. real<br>d. DAG</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>编译程序使用( )区别标识符的作用域。<br>A. 说明标识符的过程或函数名<br>B．说明标识符的过程或函数的静态层次<br>C．说明标识符的过程或函数的动态层次<br>D . 标识符的行号</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>表达式(┐A∨B)∧(C∨D)的逆波兰表示为( )。<br>A.  ┐AB∨∧CD∨<br>B． A┐B∨CD∨∧<br>C． AB∨┐CD∨∧<br>D． A┐B∨∧CD∨</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>赋值语句x:=-(a+b)/(c-d)-(a+b*c)的逆波兰式表示是( )。<br>a. xab+cd-/-bc*a+-:=<br>b. xab+/cd-bc*a+--:=<br>c. xab+-cd-/abc*+-:=<br>d. xab+cd-/abc*+-:=</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>布尔表达式计算时可以采用某种优化措施，比如A and B用if-then-else可解释为( )。<br>a. if A then true else B<br>b. if A then B else false<br>c. if A then false else true<br>d. if A then true else false</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>赋值语句x:=-(a+b)/(c-d)-(a+b*c)的逆波兰式表示是( )。<br>a. xab+cd-/-bc*a+-:=<br>b. xab+cd-/bc*a+--:=<br>c. xab+-cd-/abc*+-:=<br>d. xab+cd-/abc*+--:=</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>后缀式 ab+cd+/ 可用表达式( )来表示。<br>A．a+b/c+d<br>B．(a+b)/(c+d)<br>C．a+b/(c+d)<br>D．a+b+c/d</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>间接三元式表示法的优点为( )。<br>A．采用间接码表，便于优化处理<br>B．节省存储空间，不便于表的修改<br>C．便于优化处理，节省存储空间<br>D．节省存储空间，不便于优化处理</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td>使用三元式是为了( )：<br>a. 便于代码优化处理<br>b. 避免把临时变量填入符号表<br>c. 节省存储代码的空间<br>d. 提高访问代码的速度</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>四元式之间的联系是通过( )实现的。<br>A．指示器<br>B．临时变量<br>C．符号表<br>D．程序变量</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>为了便于优化处理，三地址代码可以表示成( )。<br>a. 三元式<br>b. 四元式<br>c. 后缀式<br>d. 间接三元式</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>在编译程序中，( )不是常见的中间语言形式。<br>a.波兰式<br>b. 三元式<br>c. 四元式<br>d. 抽象语法树</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>在编译程序中安排中间代码生成的目的是( )。<br>a. 便于提高编译效率；<br>b. 便于提高分析的正确性；<br>c. 便于代码优化和目标程序的移植；<br>d.便于提高编译速度；</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>在一棵语法树中结点的继承属性和综合属性之间的相互依赖关系可以由( )来描述。<br>a. 抽象语法树；<br>b. 语法规则；<br>c. 依赖图；<br>d. 三地址代码；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>中间代码生成时所依据的是( )。<br>A．语法规则<br>B．词法规则<br>C．语义规则<br>D．等价变换规则</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>常用的参数传递方式有【1】，传值和传名。</td>
+        <td><center>%传地址</center></td>
+		<td><center> %传地址</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>对于文法的每个产生式都配备了一组属性的计算规则，称为【1】。</td>
+        <td><center>%语义规则</center></td>
+		<td><center> %语义规则</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>后缀式abc-/所代表的表达式是【1】。</td>
+        <td><center>%a/(b-c)</center></td>
+		<td><center> %a/(b-c)</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>逆波兰式ab+c+d*e 所表达的表达式为。</td>
+        <td><center>%(a+b+c)*d-e</center></td>
+		<td><center> %(a+b+c)*d-e</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>一个名字的属性包括【1】和【2】。</td>
+        <td><center>%类型%作用域</center></td>
+		<td><center> %类型%作用域</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>语法分析是依据语言的【1】规则进行的，中间代码产生是依据语言的【2】规进行的。</td>
+        <td><center>%语法%语义</center></td>
+		<td><center> %语法%语义</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>语义分析阶段所生成的与源程序等价的中间表示形式可以有【1】、【2】与【3】等。</td>
+        <td><center>%逆波兰%四元式表示%三元式表示</center></td>
+		<td><center> %逆波兰%四元式表示%三元式表示</center></td>
+	<td><center>3</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>语法分析是依据语言的语法规则进行的，中间代码产生是依据语言的【1】规则进行的。</td>
+        <td><center>%语义</center></td>
+		<td><center> %语义</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>多目运算x:=y[i]的三元式表示为两部分：【1】和【2】。</td>
+        <td><center>"%(0):([]=,y,i)%(1):(assign,x,(0))"</center></td>
+		<td><center> %(0):([]=,y,i)%(1):(assign,x(0))</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>生成三地址代码时，临时变量的名字对应抽象语法树的【1】。</td>
+        <td><center>%内部结点</center></td>
+		<td><center> %内部结点</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>一个类型表达式或者是基本类型，或者由【1】施加于其它类型表达式组成。</td>
+        <td><center>%类型构造符</center></td>
+		<td><center> %类型构造符</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>在程序设计语言中，布尔表达式有两个基本的作用：一个是【1】；另一个是作控制流语句中的【2】。</td>
+        <td><center>%计算逻辑值%条件表达式</center></td>
+		<td><center> %计算逻辑值%条件表达式</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>允许嵌套过程的语言，其过程说明语句的翻译用两个栈tblptr和offset分别保存尚未处理完的过程的【1】和它们的offset，这两个栈顶的元素分别是正在处理的过程的的符号表指针和【2】。</td>
+        <td><center>%符号表指针%相对地址</center></td>
+		<td><center> %符号表指针%相对地址</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>在一些pascal的实现中，如果说明中出现了没有名字的类型表达式，编译器这样处理：建立一个【1】来和每个声明的变量标识符相联系。</td>
+        <td><center>%隐含的类型名</center></td>
+		<td><center> %隐含的类型名</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>赋值语句a:=b*-c+b*-c的后缀式为【1】。</td>
+        <td><center>%a b c uminus * b c uminus * + assign</center></td>
+		<td><center> %a b c uminus * b c uminus * + assign</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>多目运算X[i]:=y的三元式表示为两部分：【1】和【2】。</td>
+        <td><center>"%(0):(=[]，x，i)%(1):(assign，(0),y)"</center></td>
+        <td style="color:red"><center> %(0):([]=,y,i)%(1):(assign,x(0))</center></td>
+	<td><center>0</center></td>
+	</tr>
+	<tr><td><center>33</center></td>
+        <td>编译器遇到常量说明时，要把常量值登录入【1】并回送序号；在【2】中为等号左边的标识符建立新条目，在该条目中填入常量标志、相应类型和常量表序号。</td>
+        <td><center>%常量表%符号表</center></td>
+		<td><center> %常量表%符号表</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>34</center></td>
+        <td>典型的转移条件语句：if E then S1 else S2中，作为转移条件的布尔表达式E，赋予它两种“出口”：一是【1】；二是【2】。</td>
+        <td><center>"%""真”出口，转向S1%“假”出口，转向S2"</center></td>
+        <td style="color:red"><center> %"真”出口，转向S1%“假”出口，转向S2</center></td>
+	<td><center>0</center></td>
+	</tr>
+	<tr><td><center>35</center></td>
+        <td>类型表达式或者是【1】，或者是【2】作用在其它类型表达式上得到的新的类型表达式。</td>
+        <td><center>%基本类型%类型构造符</center></td>
+		<td><center> %基本类型%类型构造符</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>36</center></td>
+        <td>通过一遍扫描来产生布尔表达式和控制流语句的代码存在一个问题，就是当生成某些转移语句时可能还不知道该语句将要转移到的语句的地址是什么。采用【1】的办法来解决这个问题。</td>
+        <td><center>%拉链-回填</center></td>
+		<td><center> %拉链-回填</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>37</center></td>
+        <td>“回填”技术用于对过程中的说明语句进行处理时把计算出的有关符号的属性填入符号表。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>38</center></td>
+        <td>程序中的表达式语句在语义翻译时不需要回填技术。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>39</center></td>
+        <td>对于Pascal这样允许嵌套过程的语言，每当遇到过程说明D→proc id  D1; S时，便创建一张新的符号表，也就是说，让每个过程说明都有自己一张独立的符号表。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>40</center></td>
+        <td>对于任何一个编译程序来说，中间代码的产生是不一定必要的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>41</center></td>
+        <td>后缀表示形式只是用于表达式的，其他的语法结构比如条件语句、循环语句等不能使用后缀式。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>42</center></td>
+        <td>后缀式是抽象语法树的线性表示形式，后缀式是树结点的一个序列，其中每个结点都是在所有子结点之后立即出现的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>43</center></td>
+        <td>记录类型的各个域变量分配存储区域的地址的确定是相对于为记录类型变量所分配存储区域的首地址的，所以记录类型不应该建立自己的符号表。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>44</center></td>
+        <td>类型表达式中不可出现类型变量，即类型变量值不是类型表达式。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>45</center></td>
+        <td>两个类型表达式要么是同样的基本类型，要么是同样的类型构造符作用于结构等价的类型，我们就说，这两个类型系统等价。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>46</center></td>
+        <td>逆波兰表示法表示表达式时无须使用括号。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>47</center></td>
+        <td>逆波兰法表示的表达式亦称后缀式。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>48</center></td>
+        <td>如果E是一个常量或变量，则E的逆波兰式是E自身。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>49</center></td>
+        <td>生成三地址代码时，临时变量的名字对应抽象语法树的内部结点。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>50</center></td>
+        <td>四元式表示的是四地址代码，三元式表示的是三地址代码。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>51</center></td>
+        <td>所谓类型系统就是把类型表达式赋给语言各相关结构成分的规则的集合。同一种语言（比如C++语言）的编译程序，在不同的实现系统里（比如微软的Visual C++和Linux下的开源编译器TCC），可能使用不同的类型系统。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>52</center></td>
+        <td>一个语义子程序描述了一个文法所对应的翻译工作。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>53</center></td>
+        <td>由于三元式中的三个域中，仅有两个域与地址有关，所以，三元式不是严格意义上的三地址代码。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>54</center></td>
+        <td>在程序设计语言中，一般来说，布尔表达式仅仅用于条件、循环等控制流语句中的条件表达式计算。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>55</center></td>
+        <td>中间代码是独立于机器的，复杂性介于源语言和机器语言之间，便于进行与机器无关调换代码优化工作。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>56</center></td>
+        <td>综合属性是用于“自上而下”传递信息。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>1</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>

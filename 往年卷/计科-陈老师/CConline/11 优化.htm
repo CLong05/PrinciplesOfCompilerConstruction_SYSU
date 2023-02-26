@@ -1,0 +1,408 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10011 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./11 优化_files/bootstrap.css" rel="stylesheet">
+ <link href="./11 优化_files/justified-nav.css" rel="stylesheet">
+<script src="./11 优化_files/jquery.min.js.下载"></script>
+<script src="./11 优化_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>(  )和代码优化部分不是每个编译程序都必需的。<br>A．语法分析<br>B．中间代码生成<br>C．词法分析<br>D．目标代码生成</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>编译程序在优化时(B)用到源程序中的注释。<br>A. 可能要；<br>B. 不可能；<br>C. 一定要；<br>D. 有时用有时不用；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>程序的基本块是指：(D)。<br>A. 一个子程序；<br>B. 一个仅有一个入口和一个出口的语句；<br>C. 一个没有嵌套的程序段；<br>D. 一组顺序执行的程序段，仅有一个入口和一个出口；</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>代码优化的主要目标是(A)。<br>①如何提高目标程序的运行速度；<br>②如何减少目标程序运行所需的空间；<br>③如何协调①和②；<br>④如何生使生成的目标代码尽可能简短；<br>A. ①②；<br>B. ①②③；<br>C. ①②④；<br>D. ①②③④</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>基本块内的优化为( )。<br>A. 代码外提，删除归纳变量<br>B．删除多余运算，删除无用赋值<br>C．强度削弱，代码外提<br>D．循环展开，循环合并</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>下列( )优化方法不是针对循环优化进行的。<br>A. 强度削弱<br>B．删除归纳变量<br>C．删除多余运算<br>D．代码外提</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>循环优化主要采用的三项优化措施是(B)。<br>①代码外提；②削减运算强度；③删除归纳变量；④合并已知常量<br>A. ①②④；<br>B. ①②③；<br>C. ②③④；<br>D. ①③④</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>优化可生成( )的目标代码。<br>A．运行时间较短<br>B．占用存储空间较小<br>C．运行时间短但占用内存空间大<br>D．运行时间短且占用存储空间小</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>在编译程序采用的优化方案中，(C)是在循环语句范围内进行的。<br>①合并已知常量；②删除多余运算；③删除归纳变量；④强度削减；⑤代码外提；<br>A. ①④；<br>B. ①⑤；<br>C. ①④⑤；<br>D. ③④⑤</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td>局部优化是在【1】范围内进行的一种优化。</td>
+        <td><center>%基本块</center></td>
+		<td><center> %基本块</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>就实施优化所涉及的范围来说，优化可分为【1】优化、【2】优化和循环优化三种。</td>
+        <td><center>%局部优化%全局优化</center></td>
+		<td><center> %局部优化%全局优化</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>编译程序进行数据流分析的目的是【1】。</td>
+        <td><center>%为了进行全局优化</center></td>
+		<td><center> %为了进行全局优化</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>局部优化是局限于一个【1】范围内的一种优化。</td>
+        <td><center>%基本块</center></td>
+		<td><center> %基本块</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>如果一条三地址语句为x:=y+z，则称对x定值并【1】。</td>
+        <td><center>%引用y和z</center></td>
+		<td><center> %引用y和z</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>在一个基本块中的一个名字，所谓在程序中的某个给定点是【1】，是指如果在程序中（包括在本基本块或在其他基本块中）它的值在该点以后被引用。</td>
+        <td><center>%活跃的</center></td>
+		<td><center> %活跃的</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>通过构造一个有向图，称之为【1】，我们可以将控制流的信息增加到基本块的集合上来表示一个程序。</td>
+        <td><center>%流图</center></td>
+		<td><center> %流图</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>所谓变量A在某点d的定值到达另一点u，是指【1】且该通路上没有A的其他定值。</td>
+        <td><center>%流图中从d有一通路</center></td>
+		<td><center> %流图中从d有一通路</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>在一个基本块中的一个名字，所谓在程序中的某个给定点是活跃的，是指如果在程序中（包括在本基本块在其他基本块中）它的值在【1】。</td>
+        <td><center>%该点以后被引用</center></td>
+		<td><center> %该点以后被引用</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>把循环中的乘法运算用递归加法运算来替换就是一种强度削弱。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>编译程序在优化时可能要用到源程序中的注释。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>编译阶段的优化是可以通过改进算法、在源程序级上的等价变换或充分利用系统提供的程序库等途径替代的。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>对中间代码的优化依赖于具体的计算机。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>构造基本块DAG的过程就是对该基本块进行优化的过程。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>仅考虑一个基本块，不能确定一个赋值是否真是无用的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>进行代码优化时应着重考虑循环的代码优化，这对提高目标代码的效率将起更大作用。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>局限于基本块范围内的优化是基本块内的优化，但不一定是局部优化。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>目标代码生成时，应考虑如何充分利用计算机的寄存器的问题。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>强度削弱是指把程序中执行时间较长的运算替换为执行时间较短的运算。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>树形表示和四元式不便于优化，而三元式和间接三元式则便于优化。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>削减运算强度破坏了临时变量在一基本块内仅被定义一次的特性。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>优化是指对被编译的程序进行变换，使之能生成更高效的目标代码。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>在中间代码优化中循环上的优化主要有不变表达式外提和削减运算强度。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>

@@ -1,0 +1,498 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10003 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./03 有穷自动机_files/bootstrap.css" rel="stylesheet">
+ <link href="./03 有穷自动机_files/justified-nav.css" rel="stylesheet">
+<script src="./03 有穷自动机_files/jquery.min.js.下载"></script>
+<script src="./03 有穷自动机_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>程序语言下面的单词符号中，( )一般不需要超前搜索。<br>A. 关键字<br>B. 标识符<br>C. 常数<br>D. 算符和界符</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>在状态转换图的实现中，( ) 一般对应一个循环语句<br>A. 不含回路的分叉结点<br>B. 含回路的状态结点<br>C. 终态结点<br>D. 都不是</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>从左线性文法构造有限自动机时，通常自动机状态个数比文法非终结符号数多( )个。<br>A. 4<br>B. 2<br>C. 0<br>D. 1</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>正规表达式(ε|a|b)<sup>2</sup>表示的集合是( )。<br>A. {ε，ab，ba，aa，bb}<br>B. {ab，ba，aa，bb}<br>C. {a，b，ab，aa，ba，bb}<br>D. {ε，a，b，aa，bb，ab，ba}</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>有限状态自动机可用五元组（VT，Q，δ，q0，Qf）来描述，设有一有限状态自动机M的定义如下：<br>VT={0，1}，Q={q0，q1，q2}，Qf= {q2}，δ的定义为：<br>δ（q0，0）=q1<br>δ（q1，0）=q2<br>δ（q2，1）=q2<br>δ（q2，0）=q2<br>M所能接受的语言可以用正则表达式表示为( )。<br>A. (0|1)*<br>B. 00(0|1)*<br>C. (0|1)*00<br>D. 0(0|1)*0</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>有限状态自动机可用五元组（VT，Q，δ，q0，Qf）来描述，设有一有限状态自动机M的定义如下：<br>VT={0，1}，Q={q0，q1，q2}，Qf={q2}，δ的定义为：<br>δ（q0，0）=q1<br>δ（q1，0）=q2<br>δ（q2，1）=q2<br>δ（q2，0）=q2<br>M所能接受的语言为( )。<br>A. 由0和1所组成的符号串的集合<br>B. 以0为头符号和尾符号、由0和1所组成的符号串的集合<br>C. 以两个0结束的，由0和1所组成的符号串的集合<br>D. 以两个0开始的，由0和1所组成的符号串的集合</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>从接受语言的能力上来说，非确定型有穷自动机和( )是等价的。<br>A. ⅰ.正规式；ⅱ.上下文无关文法；ⅲ.确定性有穷自动机；<br>B. ⅰ.左线性正规文法；ⅱ.右线性正规文法；ⅲ.确定性有穷自动机；<br>C. ⅰ.正规式；ⅱ.上下文无关文法；ⅲ.正规文法；<br>D. ⅰ.正规式；ⅱ.确定性有穷自动机；ⅲ.下推自动机；</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>关于NFA的叙述中，下面( )是不正确的。<br>A. 有一个有穷字母表<br>B. 有多个初始状态<br>C. 有多个终止状态<br>D. 有多个有限状态</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>词法分析的理论基础是( )。<br>A. 有穷自动机理论<br>B. 图灵机理论<br>C. 图论<br>D. 无穷自动机理论</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td>设有两个状态S和T，如果从S出发能读出某个字w而停于终态，那么从T出发也能读出同样的字而停于终态；反之，果从T出发能读出某个字w而停于终态，那么从S出发也能读出同样的字而停于终态。则我们称状态S和状态T是( )。<br>A. 可区分的；<br>B. 等价的；<br>C. 多余的；<br>D. 无用的。</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>词法分析器的输出结果是( )。<br>A、单词自身值<br>B、单词在符号表中的位置<br>C、单词的种别编码<br>D、单词的种别编码和自身值</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>编译过程中扫描器的任务包括( )。<br>①组织源程序的输入<br>②按词法规则分割出单词，识别出其属性，并转换成属性字的形式输出<br>⑧删除注解<br>④删除空格及无用字符<br>⑤行计数、列计数<br>⑥发现并定位词法错误<br>⑦建立符号表<br>A. ②③④⑦<br>B. ②③④⑥⑦<br>C. ①②③④⑥⑦<br>D. ①②③④⑤⑥⑦</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>下述正则表达式中( )与(a*+b)*(c+d)等价(即有相同符号串集)。(x+y亦可写作x|y)<br>①a*(c+d)+b(c+d)<br>②a*(c+d)*+b(c+d)*<br>③a*(c+d)+b(c+d)<br>④(a+b)*c+(a+b)*d<br>⑤(a*+b)*c+(a*+b)*d<br>A. ①③<br>B. ③④⑤<br>C. ③<br>D. ④⑤</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>正则式的“*”读作( )。<br>A. 并且<br>B. 或者<br>C. 连接<br>D. 闭包</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>在状态转换图中，结点代表( )，用圆圈表示。<br>A. 输入缓冲区<br>B. 向前搜索<br>C. 状态<br>D. 字符串</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>与(a|b)*(a|b)等价的正规式是( )。<br>A. a*| b*<br>B. (ab)*(a|b)*<br>C. (a|b)(a|b)*<br>D. (a|b)*</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>无符号常数的识别和拼数工作通常都在( ) 阶段完成。<br>Ａ. 词法分析<br>Ｂ. 语法分析<br>Ｃ. 语义分析<br>Ｄ. 代码生成<br></td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>词法分析器对扫描缓冲区进行扫描时一般用两个指示器，一个指向当前正在识别的单词符号的【1】；另一个用于向前搜索以寻找单词符号的【2】。</td>
+        <td><center>%开始位置%终点</center></td>
+		<td><center> %开始位置%终点</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>一个确定性有限自动机DFA M的化简是指：寻找一个状态数比M少的DFA M’，使得【1】。</td>
+        <td><center>%L(M)=L(M')</center></td>
+        <td style="color:red"><center> %UNKNOW</center></td>
+	<td><center>0</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>词法分析器所的输出常表示成如下形式的二元式：（【1】，【2】）。</td>
+        <td><center>%单词种别%单词符号的属性值；</center></td>
+		<td><center> %单词种别%单词符号的属性值</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>一个状态转换图只包含有限个状态，其中有一个被认为是【1】，而且实际上至少有一个【2】。</td>
+        <td><center>%初态%终态</center></td>
+		<td><center> %初态%终态</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>把状态转换图用程序实现时，对于含有回路的状态结点来说，可以让它对应一个由【1】和【2】语句构成的程序段。</td>
+        <td><center>%while%if</center></td>
+		<td><center> %while%if</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>词法分析阶段的任务式从左到右扫描【1】，从而逐个识别【2】。</td>
+        <td><center>%源程序%单词</center></td>
+		<td><center> %源程序%单词</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>如果一个种别只含有一个单词符号，那么，对于这个单词符号，【1】就可以完全代表它自身了。</td>
+        <td><center>%类别编码</center></td>
+		<td><center> %类别编码</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>单词符号的属性值是指单词符号的特性或特征，其属性值则是反映特性或特征的值。比如，对于某个标识符，常将存放它的有关信息的【1】作为其属性值。</td>
+        <td><center>%符号表项的指针</center></td>
+		<td><center> %符号表项的指针</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>单词符号的属性值是指单词符号的特性或特征，其属性值则是反映特性或特征的值。比如，对于常数，常将存放它的【1】作为其属性值。</td>
+        <td><center>%常数表项的指针</center></td>
+		<td><center> %常数表项的指针</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>如果一个种别含有多个单词符号，那么，对于它的每个单词符号，除了给出种别编码以外，还应给出有关单词符号的【1】（【2】）。</td>
+        <td><center>%属性信息%属性值</center></td>
+		<td><center> %属性信息%属性值</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>如果【1】所表示的正规集相同，则认为这两个正规式等价。</td>
+        <td><center>%两个正规式</center></td>
+		<td><center> %两个正规式</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>对于Σ中的任何符号串α，如果存在一条从初态结点到某一终态结点的通路，且这条通路上【1】的标记符号连接起来形成的【2】等于α，则称α被该自动机所接受（识别）。</td>
+        <td><center>%所有弧%符号串</center></td>
+		<td><center> %所有弧%符号串</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>一个Lex源程序主要包括两部分，一部分是【1】，另一部分是【2】。</td>
+        <td><center>%正规定义式%识别规则</center></td>
+		<td><center> %正规定义式%识别规则</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>"一个DFA可用一个矩阵表示，该矩阵的行表示【1】，列表示【2】，矩阵元素表示【3】（或δ(s, a)）的值，这个矩阵叫状态转换矩阵。"</td>
+        <td><center>%状态%输入字符%转换函数</center></td>
+		<td><center> %状态%输入字符%转换函数</center></td>
+	<td><center>3</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>对于词法分析程序来说，当程序到达“错误处理”时，意味着现行状态i和当前所面临的输入串不匹配。如果后面还有状态图，出现在这个地方的代码应该为：将【1】回退一个位置，并令下一个【2】开始工作。</td>
+        <td><center>%搜索器%状态图</center></td>
+		<td><center> %搜索图%状态图</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>33</center></td>
+        <td>NFA M的非确定性表现在它有多个终态。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>34</center></td>
+        <td>有穷自动机接受的语言是正则语言。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>35</center></td>
+        <td>若r1和r2是Σ上的正规式，则r1|r2也是。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>36</center></td>
+        <td>设M是一个NFA，并且L(M)＝{x，y，z}，则M的状态数至少为4个。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>37</center></td>
+        <td>令Σ＝{a，b}，则Σ上所有以b为首的字符构成的正规集的正规式为b*(a|b)*。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>38</center></td>
+        <td>对任何一个NFA M，都存在一个DFA M'，使得L(M')=L(M)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>39</center></td>
+        <td>对一个右线性文法G，必存在一个左线性文法G'，使得L(G)=L(G')，反之亦然。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>40</center></td>
+        <td>对任意一个右线性文法G，都存在一个NFA M，满足L(G)=L(M)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>41</center></td>
+        <td>对任意一个右线性文法G，都存在一个DFA M，满足L(G)=L(M)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>42</center></td>
+        <td>对任何正则表达式r，都存在一个NFA M，满足L(M)=L(r)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>43</center></td>
+        <td>对任何正则表达式r，都存在一个DFA M，满足L(M)=L(r)。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>44</center></td>
+        <td>一张转换图只包含有限个状态，其中有一个被认为是初态，最多只有一个终态。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>45</center></td>
+        <td>一个正规式只能对应一个有限状态自动机；</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>46</center></td>
+        <td>在词法分析的状态转换图中，有些结点是带星号的，这些结点肯定是终态结点。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>47</center></td>
+        <td>适当设置扫描缓冲区的大小（比如容纳256个字符）可以保证单词符号不会被它的边界所打断。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>

@@ -1,0 +1,438 @@
+
+<!-- saved from url=(0062)http://222.200.182.10/docs/lookOneExamAnswer.php?$examid=10005 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><link href="./05 语法分析1-自顶向下_files/bootstrap.css" rel="stylesheet">
+ <link href="./05 语法分析1-自顶向下_files/justified-nav.css" rel="stylesheet">
+<script src="./05 语法分析1-自顶向下_files/jquery.min.js.下载"></script>
+<script src="./05 语法分析1-自顶向下_files/bootstrap.min.js.下载"></script>
+
+
+<style type="text/css" adt="123"></style><script>//console.log('a')
+</script><script>doAdblock();
+function doAdblock(){
+    (function() {
+        function A() {}
+        A.prototype = {
+            rules: {
+                /*youku_loader: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/loaders?[^\.]*\.swf/,
+                 replace: "http://2016.adtchrome.com/loader.swf"
+                 },
+                 youku_player: {
+                 find: /^http:\/\/static\.youku\.com(\/v[\d\.]*)?\/v\/swf\/(q?player[^\.]*|\w{13})\.swf/,
+                 replace: "http://2016.adtchrome.com/player.swf"
+                 },*/
+                'pps_pps': {
+                    'find': /^http:\/\/www\.iqiyi\.com\/player\/cupid\/common\/pps_flvplay_s\.swf/,
+                    'replace': 'http://swf.adtchrome.com/pps_20140420.swf'
+                },
+                '17173_in':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFile(Customer)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_in_20150522.swf"
+                },
+                '17173_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/PreloaderFileFirstpage\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_out_20150522.swf"
+                },
+                '17173_live':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream(_firstpage)?\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173_stream_20150522.swf"
+                },
+                '17173_live_out':{
+                    'find':/http:\/\/f\.v\.17173cdn\.com\/(\d+\/)?flash\/Player_stream_(custom)?Out\.swf/,
+                    'replace':"http://swf.adtchrome.com/17173.out.Live.swf"
+                }
+            },
+            _done: null,
+            get done() {
+                if(!this._done) {
+                    this._done = new Array();
+                }
+                return this._done;
+            },
+            addAnimations: function() {
+                var style = document.createElement('style');
+                style.type = 'text/css';
+                style.innerHTML = 'object,embed{\
+                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;\
+                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;\
+                -o-animation-duration:.001s;-o-animation-name:playerInserted;\
+                animation-duration:.001s;animation-name:playerInserted;}\
+                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}\
+                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}';
+                document.getElementsByTagName('head')[0].appendChild(style);
+            },
+            animationsHandler: function(e) {
+                if(e.animationName === 'playerInserted') {
+                    this.replace(e.target);
+                }
+            },
+            replace: function(elem) {
+                if (/http:\/\/v.youku.com\/v_show\/.*/.test(window.location.href)){
+                    var tag = document.getElementById("playerBox").getAttribute("player")
+                    if (tag == "adt"){
+                        console.log("adt adv")
+                        return;
+                    }
+                }
+                if(this.done.indexOf(elem) != -1) return;
+                this.done.push(elem);
+                var player = elem.data || elem.src;
+                if(!player) return;
+                var i, find, replace = false;
+                for(i in this.rules) {
+                    find = this.rules[i]['find'];
+                    if(find.test(player)) {
+                        replace = this.rules[i]['replace'];
+                        if('function' === typeof this.rules[i]['preHandle']) {
+                            this.rules[i]['preHandle'].bind(this, elem, find, replace, player)();
+                        }else{
+                            this.reallyReplace.bind(this, elem, find, replace)();
+                        }
+                        break;
+                    }
+                }
+            },
+            reallyReplace: function(elem, find, replace) {
+                elem.data && (elem.data = elem.data.replace(find, replace)) || elem.src && ((elem.src = elem.src.replace(find, replace)) && (elem.style.display = 'block'));
+                var b = elem.querySelector("param[name='movie']");
+                this.reloadPlugin(elem);
+            },
+            reloadPlugin: function(elem) {
+                var nextSibling = elem.nextSibling;
+                var parentNode = elem.parentNode;
+                parentNode.removeChild(elem);
+                var newElem = elem.cloneNode(true);
+                this.done.push(newElem);
+                if(nextSibling) {
+                    parentNode.insertBefore(newElem, nextSibling);
+                } else {
+                    parentNode.appendChild(newElem);
+                }
+            },
+            init: function() {
+                var handler = this.animationsHandler.bind(this);
+                document.body.addEventListener('webkitAnimationStart', handler, false);
+                document.body.addEventListener('msAnimationStart', handler, false);
+                document.body.addEventListener('oAnimationStart', handler, false);
+                document.body.addEventListener('animationstart', handler, false);
+                this.addAnimations();
+            }
+        };
+        new A().init();
+    })();
+}
+// 20140730
+(function cnbeta() {
+    if (document.URL.indexOf('cnbeta.com') >= 0) {
+        var elms = document.body.querySelectorAll("p>embed");
+        Array.prototype.forEach.call(elms, function(elm) {
+            elm.style.marginLeft = "0px";
+        });
+    }
+})();
+//baidu
+//display: inline !important; visibility: visible !important;
+//display:block !important;visibility:visible !important; display:block !important;visibility:visible !important
+if(document.URL.indexOf('www.baidu.com') >= 0){
+    if(document && document.getElementsByTagName && document.getElementById && document.body){
+        var aa = function(){
+            var all = document.body.querySelectorAll("#content_left div,#content_left table");
+            for(var i = 0; i < all.length; i++){
+                if(/display:\s?(table|block)\s!important/.test(all[i].getAttribute("style"))){all[i].style.display= "none";all[i].style.visibility='hidden';}
+            }
+        }
+        aa();
+        document.getElementById('wrapper_wrapper').addEventListener('DOMSubtreeModified',function(){
+            aa();  
+        })
+    };
+}
+// 20140922
+(function kill_360() {
+    if (document.URL.indexOf('so.com') >= 0) {
+        document.getElementById("e_idea_pp").style.display = none;
+    }
+})();
+//解决腾讯视频列表点击无效
+if(document.URL.indexOf("v.qq.com") >= 0){
+    if (document.getElementById("mod_videolist")){
+        var listBox = document.getElementById("mod_videolist")
+        var list = listBox.getElementsByClassName("list_item")
+        for (i = 0;i < list.length;i++){
+            list[i].addEventListener("click", function() {
+                var url = this.getElementsByTagName("a")[0]
+                url = url.getAttribute("href")
+                var host = window.location.href
+                url = host.replace(/cover\/.*/,url)
+                window.location.href = url
+            })
+        }
+    }
+}
+if (document.URL.indexOf("tv.sohu.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+if (document.URL.indexOf("56.com") >= 0){
+    if (document.cookie.indexOf("fee_status=true")==-1){document.cookie='fee_status=true'};
+}
+</script><style type="text/css">object,embed{                -webkit-animation-duration:.001s;-webkit-animation-name:playerInserted;                -ms-animation-duration:.001s;-ms-animation-name:playerInserted;                -o-animation-duration:.001s;-o-animation-name:playerInserted;                animation-duration:.001s;animation-name:playerInserted;}                @-webkit-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-ms-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @-o-keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}                @keyframes playerInserted{from{opacity:0.99;}to{opacity:1;}}</style></head><body oncopy="alert(&#39;对不起，本网页禁止复制！&#39;);return false;"><div class="container">
+
+      <div class="masthead">
+     <h3 class="text-muted">在线答题系统</h3>
+        <ul class="nav nav-justified">
+          <li><a href="http://222.200.182.10/docs/selectExam.php">作业</a></li>
+          <li><a href="http://222.200.182.10/docs/selectFinalExam.php">考试</a></li>
+          <li><a href="http://222.200.182.10/docs/lookOverAnswer.php">查看答案</a></li>
+          <li><a href="http://222.200.182.10/docs/showSelfInformation.php">个人信息</a></li>
+          <li><a href="http://222.200.182.10/docs/updateSelfInformation.php">修改信息</a></li>
+          <li><a href="http://222.200.182.10/docs/logout.php">注销</a></li>
+        </ul>
+	</div>
+</div>
+      
+<hr>
+
+ 
+
+
+<div class="container">
+<center>
+<table class="table table-bordered" border="1">
+<tbody><tr><td><center>题号</center></td>
+<td><center>题目内容</center></td>
+<td><center>标准答案</center></td>
+<td><center>您的答案</center></td>
+<td><center>您的得分</center></td></tr>
+	<tr><td><center>1</center></td>
+        <td>高级语言编译程序常用的语法分析方法中，递归下降分析法属于(  )分析法。<br>A. 自左至右<br>B. 自顶向下<br>C. 自底向上<br>D. 自右向左</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>2</center></td>
+        <td>上下文无关文法可以用(  )来描述。<br>A. 正则表达式<br>B. 正规文法<br>C. 扩展的BNF<br>D. 翻译模式</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>3</center></td>
+        <td>自上而下分析面临的四个问题中，不包括(  )。<br>A. 需消除左递归<br>B. 存在回朔<br>C. 虚假匹配<br>D. 寻找可归约串</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>4</center></td>
+        <td>语法分析器接收以(  )为单位的输入，并产生有关信息供以后各阶段使用。<br>A. 表达式<br>B. 产生式<br>C. 单词<br>D. 语句</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>5</center></td>
+        <td>自上而下分析的主旨是，对任何单词符号串，试图用一切可能的办法，从文法开始符号（根结点）出发，(  )。<br>A. 为输入串寻找最右推导<br>B. 为输入串寻找最左直接子树<br>C. 为输入串建立最右直接子树<br>D. 为输入串寻找最左推导</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>6</center></td>
+        <td>语法分析器则可以发现源程序中的(  )。<br>A．语义错误<br>B．语法和语义错误<br>C．错误并校正<br>D．语法错误</td>
+        <td><center>D</center></td>
+		<td><center>D</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>7</center></td>
+        <td>编译过程中 ,语法分析器的任务就是(  )。<br>(1)分析单词是怎样构成的<br>(2)分析单词串是如何构成语句和说明的<br>(3)分析语句和说明是如何构成程序的<br>(4)分析程序的结构<br>A． (2)(3)<br>B． (2)(3)(4)<br>C． (1)(2)(3)<br>D． (1)(2)(3)(4)</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>8</center></td>
+        <td>通常一个编译程序中，不仅包含词法分析，语法分析，中间代码生成，代码优化，目标代码生成等五个部分，还应包括(  )。<br>A．模拟执行器<br>B．解释器<br>C．表格处理和出错处理<br>D．符号执行器</td>
+        <td><center>C</center></td>
+		<td><center>C</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>9</center></td>
+        <td>一个句型中的最左(  )称为该句型的句柄。<br>A．短语<br>B．简单短语<br>C．素短语<br>D．终结符号</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>10</center></td>
+        <td>设 G是一个给定的文法，S是文法的开始符号，如果 S=&gt;* x(其中 x∈VT*),则称 x是文法 G的一个(  )。<br>A．候选式<br>B．句型<br>C．单词<br>D．产生式</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>11</center></td>
+        <td>在语法分析处理中， FIRST集合、 FOLLOW集合、 SELECT集合均是(  )。<br>A. 非终极符集<br>B．终极符集<br>C．字母表<br>D . 状态集</td>
+        <td><center>B</center></td>
+		<td><center>B</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>12</center></td>
+        <td>若一个文法是递归的，则它所产生的语言的句子(  )。<br>A．是无穷多个<br>B．是有穷多个<br>C．是可枚举的<br>D．个数是常量</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>13</center></td>
+        <td>若文法 G定义的语言是无限集，则文法必然是 (  )<br>A．递归的<br>B．前后文无关的<br>C．二义性的<br>D．无二义性的</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>14</center></td>
+        <td>如果文法 G是无二义的，则它的任何句子α(  )。<br>A．最左推导和最右推导对应的语法树必定相同<br>B．最左推导和最右推导对应的语法树可能不同<br>C．最左推导和最右推导必定相同<br>D．可能存在两个不同的最左推导，但它们对应的语法树相同</td>
+        <td><center>A</center></td>
+		<td><center>A</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>15</center></td>
+        <td>语法分析器的工作本质上就是按文法的【1】，识别输入符号串是否为一个句子。这里所说的输入串是指由【2】组成的有限序列。</td>
+        <td><center>%产生式%单词符号</center></td>
+		<td><center> %产生式%单词符号</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>16</center></td>
+        <td>自顶向下分析会遇到的主要问题是【1】和【2】。</td>
+        <td><center>%左递归%回溯</center></td>
+		<td><center> %左递归%回溯</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>17</center></td>
+        <td>自上而下地为输入串建立一棵语法树，就是为输入串寻找一个【1】。</td>
+        <td><center>%最左推导</center></td>
+		<td><center> %最左推导</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>18</center></td>
+        <td>在扩充的巴科斯范式中，用【1】表示符号或串α的出现可有可无。</td>
+        <td><center>%方括号</center></td>
+		<td><center> %方括号</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>19</center></td>
+        <td>对于一个文法，当给出一串符号时，怎么能知道它是不是该文法的一个句子呢？这就要判断，看是否能从文法的【1】出发【2】这个输入串。</td>
+        <td><center>%开始符号%推导出</center></td>
+		<td><center> %开始符号%推导出</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>20</center></td>
+        <td>写出E→T | E+T的EBNF范式为【1】。</td>
+        <td><center>%E→T{+T}</center></td>
+		<td><center> %E→T{+T}</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>21</center></td>
+        <td>扩展的巴克斯范式描述语法的好处是，直观易懂，便于表示消去【1】和提取【2】。</td>
+        <td><center>%左递归%左因子</center></td>
+		<td><center> %左递归%左因子</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>22</center></td>
+        <td>递归下降法不允许任一非终极符是直接【1】递归的。</td>
+        <td><center>%左</center></td>
+		<td><center> %左%</center></td>
+	<td><center>1</center></td>
+	</tr>
+	<tr><td><center>23</center></td>
+        <td>自顶向下的语法分析方法的基本思想是：从文法的【1】开始，根据给定的输入串并按照文法的产生式一步一步的向下进行【2】，试图推导出文法的【3】，使之与给定的输入串【4】。</td>
+        <td><center>%开始符号%直接推导%句子%匹配</center></td>
+		<td><center> %开始符号%直接推导%句子%匹配</center></td>
+	<td><center>4</center></td>
+	</tr>
+	<tr><td><center>24</center></td>
+        <td>语法分析器的输入是【1】，其输出是【2】。</td>
+        <td><center>%单词符号串%语法单位</center></td>
+		<td><center> %单词符号串%语法单位</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>25</center></td>
+        <td>语法分析基于【1】文法进行，即识别的是该类文法的句子。语法分析的有效工具是【2】。</td>
+        <td><center>%上下文无关%语法树</center></td>
+		<td><center> %上下文无关%语法树</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>26</center></td>
+        <td>一个文法是含有左递归的，如果存在非终结符P，使得P⇒*α。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>27</center></td>
+        <td>提取公共左因子的副产品是引进了大量的非终结符和ε产生式。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>28</center></td>
+        <td>把一个文法改造成任何非终结符的所有后选终结首符集两两不相交的办法是消除左递归。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>29</center></td>
+        <td>若X∈VT，则FIRST(X)={ X }。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>30</center></td>
+        <td>自上而下分析及自下而上分析中的“下”是指被分析的源程序串。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>31</center></td>
+        <td>每个文法都能改写为 LL(1)文法。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>32</center></td>
+        <td>递归下降法不允许任一非终极符是直接左递归的。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>33</center></td>
+        <td>若一个句型中出现了某产生式的右部，则此右部一定是该句型的句柄。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>34</center></td>
+        <td>一个句型的句柄一定是文法某产生式的右部。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>35</center></td>
+        <td>递归下降分析法是自顶向上分析方法。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>36</center></td>
+        <td>分析作为单独的一遍来处理较好。</td>
+        <td><center>false</center></td>
+		<td><center>false</center></td>
+	<td><center>2</center></td>
+	</tr>
+	<tr><td><center>37</center></td>
+        <td>归约和规范推导是互逆的两个过程。</td>
+        <td><center>true</center></td>
+		<td><center>true</center></td>
+	<td><center>2</center></td>
+	</tr>
+</tbody></table>
+</center>
+<hr>
+<p style="color:red">出错答案以红色标注,其中%为分隔符。</p>
+<p style="color:red">想要提高本次测试的分数可以在参考完答案后重新答题。</p>
+</div>
+
+
+</body><div></div></html>
