@@ -1,1 +1,2 @@
-# PrinciplesOfCompilerConstruction-SYSU
+# 中山大学计算机学院编译原理课程资料
+本仓库内为2022年春季学期中山大学编译原理课程资料，包含有个人所做笔记。授课人为李文军教授。
